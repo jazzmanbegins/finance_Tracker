@@ -1,0 +1,74 @@
+{
+  "name": "finance-tracker",
+  "version": "1.0.0",
+  "description": "Personal Finance Tracker",
+  "author": "jazzmanbegins",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "node server.js",
+    "electron": "electron .",
+    "electron:build": "electron-builder --win"
+  },
+  "dependencies": {
+    "@seald-io/nedb": "^4.1.2",
+    "express": "^4.19.0",
+    "mongodb-memory-server": "^10.1.0",
+    "parse-server": "^7.3.0"
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.0",
+    "nodemon": "^3.1.0",
+    "sharp": "^0.34.5",
+    "to-ico": "^1.1.5"
+  },
+  "build": {
+    "appId": "com.financetracker.app",
+    "productName": "Finance Tracker",
+    "copyright": "© 2026 jazzmanbegins",
+    "asar": false,
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Finance Tracker"
+    },
+    "files": [
+      "electron/**/*",
+      "node_modules/**/*",
+      "!node_modules/.cache/**/*",
+      "!.data/**/*",
+      "!dist/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "cloud",
+        "to": "cloud"
+      },
+      {
+        "from": "public",
+        "to": "public"
+      },
+      {
+        "from": "assets",
+        "to": "assets"
+      },
+      {
+        "from": "loading.html",
+        "to": "loading.html"
+      },
+      {
+        "from": "mongodb-bin",
+        "to": "mongodb-bin"
+      }
+    ]
+  }
+}

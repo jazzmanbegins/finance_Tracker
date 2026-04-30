@@ -1,0 +1,7 @@
+node_modules/
+dist/
+mongodb-bin/
+.data/
+logs/
+*.log
+.claude/

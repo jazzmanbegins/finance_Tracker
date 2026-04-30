@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<title>Finance Tracker — กำลังเริ่มต้น...</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Prompt', 'Segoe UI', sans-serif;
+    background: #0d1117; color: #e6edf3;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; flex-direction: column; gap: 28px;
+    user-select: none;
+  }
+
+  .logo { font-size: 3.5rem; animation: pulse 1.8s ease-in-out infinite; }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%       { transform: scale(1.12); opacity: 0.8; }
+  }
+
+  h1 { font-size: 1.6rem; font-weight: 700; color: #e6edf3; }
+  .subtitle { font-size: 0.9rem; color: #7d8da1; font-weight: 300; }
+
+  /* Spinner dots */
+  .dots { display: flex; gap: 8px; margin-top: 8px; }
+  .dot {
+    width: 10px; height: 10px; border-radius: 50%; background: #a371f7;
+    animation: bounce 1.2s ease-in-out infinite;
+  }
+  .dot:nth-child(2) { animation-delay: .2s; }
+  .dot:nth-child(3) { animation-delay: .4s; }
+  @keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0); opacity: .4; }
+    40%           { transform: translateY(-10px); opacity: 1; }
+  }
+
+  .status {
+    font-size: 0.8rem; color: #7d8da1; margin-top: 4px;
+    min-height: 1.2em; transition: color .3s;
+  }
+  .status.ready { color: #3fb950; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="logo">💰</div>
+<div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px">
+  <h1>Finance Tracker</h1>
+  <div class="subtitle">กำลังเริ่มต้นระบบ กรุณารอสักครู่...</div>
+</div>
+
+<div class="dots">
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+</div>
+
+<div class="status" id="status">กำลังเชื่อมต่อ server...</div>
+
+<script>
+const STATUS = document.getElementById('status');
+let attempt = 0;
+
+async function checkServer() {
+  attempt++;
+  try {
+    const res = await fetch('http://localhost:1337/parse/health', { cache: 'no-store' });
+    const data = await res.json();
+    if (data.status === 'ok') {
+      STATUS.textContent = 'พร้อมแล้ว! กำลังเปิดแอพ...';
+      STATUS.classList.add('ready');
+      setTimeout(() => { window.location.href = 'http://localhost:1337'; }, 600);
+      return;
+    }
+  } catch {
+    STATUS.textContent = `กำลังรอ server... (${attempt})`;
+  }
+  setTimeout(checkServer, 1000);
+}
+
+// Start checking after a short delay
+setTimeout(checkServer, 1500);
+</script>
+</body>
+</html>
