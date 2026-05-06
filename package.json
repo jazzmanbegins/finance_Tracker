@@ -11,22 +11,17 @@
   },
   "dependencies": {
     "@seald-io/nedb": "^4.1.2",
-    "express": "^4.19.0",
-    "mongodb-memory-server": "^10.1.0",
-    "parse-server": "^7.3.0"
+    "express": "^4.19.0"
   },
   "devDependencies": {
     "electron": "^30.0.0",
-    "electron-builder": "^24.13.0",
-    "nodemon": "^3.1.0",
-    "sharp": "^0.34.5",
-    "to-ico": "^1.1.5"
+    "electron-builder": "^24.13.0"
   },
   "build": {
     "appId": "com.financetracker.app",
     "productName": "Finance Tracker",
     "copyright": "© 2026 jazzmanbegins",
-    "asar": false,
+    "asar": true,
     "directories": {
       "output": "dist"
     },
@@ -45,14 +40,18 @@
       "electron/**/*",
       "node_modules/**/*",
       "!node_modules/.cache/**/*",
+      "!node_modules/mongodb-memory-server*/**/*",
+      "!node_modules/parse-server*/**/*",
+      "!node_modules/mongodb/**/*",
       "!.data/**/*",
-      "!dist/**/*"
+      "!dist/**/*",
+      "!cloud/**/*",
+      "!mongodb-bin/**/*",
+      "!server.js",
+      "!start-finance.vbs",
+      "!stop-finance.vbs"
     ],
     "extraResources": [
-      {
-        "from": "cloud",
-        "to": "cloud"
-      },
       {
         "from": "public",
         "to": "public"
@@ -64,10 +63,6 @@
       {
         "from": "loading.html",
         "to": "loading.html"
-      },
-      {
-        "from": "mongodb-bin",
-        "to": "mongodb-bin"
       }
     ]
   }
